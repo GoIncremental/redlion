@@ -1,0 +1,19 @@
+---
+- hosts: li-uat-01
+  user: deploy
+  vars:
+    web_dir: '/home/deploy/sites'
+    app_name: 'redlion'
+    app_version: '{{ lookup("env", "UAT_VER") }}'
+    app_env: 'uat'
+    app_port: '{{ lookup ("env", "APP_PORT")}}'
+    server_protocol: 'http'
+    server_address: 'uat.theredlionafterhours.co.uk'
+    server_ip: "{{hostvars['li-uat-01']['ansible_eth0']['ipv4']['address']}}"
+    use_ssl: false
+    stripe_api_key: '{{ lookup("env", "UAT_STRIPE_API_KEY") }}'
+    session_secret: '{{ lookup("env", "UAT_SESSION_SECRET") }}'
+  roles:
+    - ../../../bower_modules/gi-ansible/roles/helper
+    - ../../../bower_modules/gi-ansible/roles/webapp
+    - ../../common/roles/update

@@ -1,0 +1,27 @@
+{
+  "name": "redlion",
+  "version": "0.0.1",
+  "homepage": "https://github.com/GoIncremental/redlion",
+  "authors": [
+    "David Bochenski <david@goincremental.co.uk>"
+  ],
+  "description": "theredlionafterhours.co.uk website",
+  "moduleType": [
+    "globals"
+  ],
+  "license": "All Rights Reserved",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "~3.3.0"
+  },
+  "devDependencies": {
+    "gi-ansible": "git@github.com:GoIncremental/gi-ansible.git"
+  }
+}
