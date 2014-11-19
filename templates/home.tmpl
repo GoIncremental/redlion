@@ -1,2 +1,79 @@
-<h1>The 2015 Red Lion After Hours Calendar</h1>
-<p>{{model.message}}</p>
+<div class="row">
+  <div ng-cloak class="alert alert-danger" ng-show="orderError">
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+    <strong>Oops!</strong> Something went wrong and we were unable to process your order.<br/>
+    Your card has <strong>not</strong> been charged.<br/>
+    Please double check all the details and try again, or email contact@theredlionafterhours.co.uk
+  </div>
+  <div ng-cloak class="alert alert-success" ng-show="orderComplete">
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+    <strong>Order Complete!</strong> Thanks for your order.  You will receive an e-mail confirmation confirming payment.
+  </div>
+  <div ng-cloak class="alert alert-info" ng-show="orderProcessing">
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+    <strong>Processing...</strong> We are processing your payment.  Please do not refresh the page.
+  </div>
+  <div class="col-md-3">
+    <img class="img-responsive poster" src="/img/afterhours.jpg">
+  </div>
+  <div class="col-md-9">
+    <h1>The Red Lion 2015 After Hours Calendar</h1>
+    <p>We hope you will enjoy our 2015 calendar.  They're priced at £10 each and all proceeds are going to St. Giles Hospice. </p>
+    <p>Thanks to the generosity of the sponsors, the printing costs for the first 300 calendars has been covered.  So the full £10 will go directly to St. Giles for each calendar sold.</p>
+    <p>To further ensure that we raise as much as possible for St. Giles, for those of you that order online, we've chosen to add in
+      the cost of the card processing, and for those who choose to have them posted we're adding £3 to cover P&P.</p>
+    <p>Alternatively, you can collect your order directly from the Red Lion.  Just bring your order confirmation number with you.</p>
+    <p>We will aim to fulfill all postal orders within 7 days, and the final order date is 20th December</p>
+
+  </div>
+  <div class="col-md-12">
+    <div ng-hide="hideOrderForm">
+      <form novalidate class="well form-horizontal col-md-12">
+        <legend>Online Order Form</legend>
+        <div class="form-group">
+          <label class="col-sm-2 control-label">Quantity Required:</label>
+          <div class="col-sm-10">
+            <input type="number" ng-model="order.quantity" min="1" max="20">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-2 control-label">Phone:</label>
+          <div class="col-sm-10">
+            <input type="text" ng-model="order.phone" class="form-control"
+             placeholder="(optional)"/> Don't feel you have to give us your number, but it helps in case we need to contact you about your order.
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-2 control-label">Calendar Total:</label>
+          <div class="col-sm-10">
+             <p class="form-control-static">{{order.quantity * 10 | currency:'£'}}</p>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-2 control-label">Card Processing Fee:</label>
+          <div class="col-sm-10">
+             <p class="form-control-static">{{processingFee() | currency:'£'}}</p>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-2 control-label">Postage Charge:</label>
+          <div class="col-sm-10">
+             <p class="form-control-static">{{postageCharge() | currency:'£'}}</p>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-2 control-label">Total:</label>
+          <div class="col-sm-10">
+             <p class="form-control-static">{{ grandTotal() | currency:'£'}}</p>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="control-label col-sm-2"></label>
+          <div class="col-sm-10">
+            <button ng-click="payWithStripe()" class="btn btn-info"><span class="glyphicon glyphicon-lock glyphicon-white"></span> Pay by Debit or Credit Card</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
