@@ -8,6 +8,11 @@
     <meta name="description" content="This is a site where you can purchase copies of the red lion after hours calender" />
   </head>
   <body>
-    [[yield]]
+    <div class="container" ng-controller="mainController">
+      [[yield]]
+    </div>
+
+    [[template "script" .Site]]
+    
   </body>
 </html>

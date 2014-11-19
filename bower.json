@@ -19,7 +19,12 @@
     "tests"
   ],
   "dependencies": {
-    "bootstrap": "~3.3.0"
+    "underscore": "~1.7.0",
+    "bootstrap": "~3.3.0",
+    "angular": "~1.2.14",
+    "angular-bootstrap": "~0.11.0",
+    "angular-resource": "~1.2.16",
+    "angular-route": "~1.2.16"
   },
   "devDependencies": {
     "gi-ansible": "git@github.com:GoIncremental/gi-ansible.git"

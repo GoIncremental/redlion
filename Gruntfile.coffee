@@ -24,17 +24,17 @@ module.exports = (grunt) ->
           stdout: true
           stderr: true
       deployDev:
-        command: 'ansible-playbook -i ' + process.env.ANSIBLE_HOSTS + ' deploy/dev/deploy.yml'
+        command: 'ansible-playbook -i ' + process.env.ANSIBLE_HOSTS + ' deploy/dev.yml'
         options:
           stdout: true
           stderr: true
       deployUAT:
-        command: 'ansible-playbook -i ' + process.env.ANSIBLE_HOSTS + ' deploy/uat/deploy.yml'
+        command: 'ansible-playbook -i ' + process.env.ANSIBLE_HOSTS + ' deploy/uat.yml'
         options:
           stdout: true
           stderr: true
       deployProd:
-        command: 'ansible-playbook -i ' + process.env.ANSIBLE_HOSTS + ' deploy/prod/deploy.yml'
+        command: 'ansible-playbook -i ' + process.env.ANSIBLE_HOSTS + ' deploy/prod.yml'
         options:
           stdout: true
           stderr: true
@@ -69,10 +69,38 @@ module.exports = (grunt) ->
         cwd: 'client/'
         src: ['img/*']
         dest: 'public'
+
     less:
       styles:
         dest: 'public/css/styles.css'
         src: 'client/less/styles.less'
+
+    coffee:
+      scripts:
+        expand: true
+        cwd: 'client/angular'
+        src: ['**/*.coffee']
+        dest: 'temp/client/js/'
+        ext: '.js'
+        options:
+          bare: true
+
+    concat:
+      scripts:
+        src: [
+          'bower_modules/underscore/underscore.js'
+          'bower_modules/angular/angular.js'
+          'bower_modules/angular-resource/angular-resource.js'
+          'bower_modules/angular-route/angular-route.js'
+          'temp/client/js/app.js'
+          'temp/client/js/routes.js'
+          'temp/client/js/services/*.js'
+          'temp/client/js/directives/*.js'
+          'temp/client/js/controllers/*.js'
+          'temp/client/js/views.js'
+          'temp/client/js/bootstrap.js'
+        ]
+        dest: 'public/js/script.js'
 
     ngTemplateCache:
       views:
@@ -80,7 +108,12 @@ module.exports = (grunt) ->
           './temp/client/js/views.js': 'client/views/*.html'
         options:
           trim: 'client'
-          module: 'seasoned'
+          module: 'redlion'
+
+    uglify:
+      scripts:
+        files:
+          'public/js/script.min.js': ['public/js/script.js']
 
     cssmin:
       styles:
@@ -94,21 +127,29 @@ module.exports = (grunt) ->
           livereload: true
 
   grunt.loadNpmTasks 'grunt-contrib-clean'
+  grunt.loadNpmTasks 'grunt-contrib-coffee'
+  grunt.loadNpmTasks 'grunt-contrib-concat'
   grunt.loadNpmTasks 'grunt-contrib-copy'
-  grunt.loadNpmTasks 'grunt-shell'
   grunt.loadNpmTasks 'grunt-contrib-less'
   grunt.loadNpmTasks 'grunt-contrib-cssmin'
   grunt.loadNpmTasks 'grunt-contrib-watch'
+  grunt.loadNpmTasks 'grunt-contrib-uglify'
+  grunt.loadNpmTasks 'grunt-gint'
+  grunt.loadNpmTasks 'grunt-shell'
 
   grunt.registerTask 'build', [
     'clean'
+    'coffee'
     'less:styles'
     'copy:fonts'
     'copy:images'
+    'ngTemplateCache'
+    'concat:scripts'
   ]
 
   grunt.registerTask 'buildUat', [
     'build'
+    'uglify:scripts'
     'cssmin:styles'
   ]
 
@@ -127,6 +168,7 @@ module.exports = (grunt) ->
 
   grunt.registerTask 'deployProd', [
     'build'
+    'uglify:scripts'
     'cssmin:styles'
     'clean:reset'
     'shell:buildProd'

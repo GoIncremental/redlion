@@ -1,8 +1,14 @@
 - name: create release folder
   file: path={{web_dir}}/{{app_name}}/src/{{app_version}}/ state=directory owner={{ansible_user_id}}
+  when: app_version != 'dev'
 
 - name: copy release files
-  copy: src=../../bin/releases/{{app_version}}/linux_amd64/ dest={{web_dir}}/{{app_name}}/src/{{app_version}}/
+  copy: src=../bin/releases/{{app_version}}/linux_amd64/ dest={{web_dir}}/{{app_name}}/src/{{app_version}}/
+  when: app_version != 'dev'
+
+- name: create dev symlink to code
+  file: src={{src_path}} dest={{web_dir}}/{{app_name}}/src/{{app_version}} state=link
+  when: app_version == 'dev'
 
 - name: create current symlink to {{app_version}}
   file: src={{web_dir}}/{{app_name}}/src/{{app_version}} dest={{web_dir}}/{{app_name}}/current state=link
@@ -12,10 +18,12 @@
 
 - name: copy .env file
   template: src=dot.env dest={{web_dir}}/{{app_name}}/current/.env
+  when: app_version != 'dev'
 
 - name: create startup script
   sudo: yes
   template: src=upstart.conf dest=/etc/init/{{app_name}}.conf mode=644
+  when: app_version != 'dev'
 
 - name: create nginx site config
   template: src=nginx.conf dest={{web_dir}}/{{app_name}}/current/conf/{{app_env}}-nginx.conf
@@ -23,8 +31,13 @@
 - name: link ubuntu nginx site config
   sudo: yes
   file: src={{web_dir}}/{{app_name}}/current/conf/{{app_env}}-nginx.conf dest=/etc/nginx/sites-enabled/{{app_name}}-{{app_env}} state=link
+  when: ansible_distribution != "MacOSX"
   notify:
     - Restart nginx
+
+- name: link osx nginx site config
+  file: src={{web_dir}}/{{app_name}}/current/conf/{{app_env}}-nginx.conf dest={{nginx_base}}/etc/nginx/sites-enabled/{{app_name}}-{{app_env}} state=link
+  when: ansible_distribution == "MacOSX"
 
 - name: restart service
   command: service {{app_name}} restart

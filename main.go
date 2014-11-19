@@ -8,6 +8,10 @@ import (
 	"github.com/goincremental/web"
 )
 
+type contextKey int
+
+const site contextKey = 3
+
 //Render creates a default web.Renderer and then returns a middleware function
 //that ensures this is placed on the request context for each request
 func Render() web.Middleware {
@@ -19,15 +23,42 @@ func Render() web.Middleware {
 	})
 }
 
+type Site struct {
+	Env string
+}
+
+func SetSite(r *http.Request, val *Site) {
+	web.SetContext(r, site, val)
+}
+
+func GetSite(r *http.Request) *Site {
+	if rv := web.GetContext(r, site); rv != nil {
+		return rv.(*Site)
+	}
+	return nil
+}
+
+func SiteMW() web.Middleware {
+	site := &Site{
+		Env: os.Getenv("APP_ENV"),
+	}
+	return web.MiddlewareFunc(func(rw http.ResponseWriter, r *http.Request, next http.HandlerFunc) {
+		SetSite(r, site)
+		next(rw, r)
+	})
+}
+
 type context struct {
 	render web.Renderer
+	Site   *Site
 }
 
 func GetRequestContext(req *http.Request) (ctx *context, err error) {
 	r := web.GetRenderer(req)
-
+	s := GetSite(req)
 	ctx = &context{
 		render: r,
+		Site:   s,
 	}
 	return
 }
@@ -60,6 +91,7 @@ func main() {
 	server := web.NewServer()
 	server.Use(web.Gzip())
 	server.Use(Render())
+	server.Use(SiteMW())
 	server.UseHandler(router)
 	server.Run(port)
 }

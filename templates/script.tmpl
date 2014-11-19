@@ -1,0 +1,15 @@
+<script async src="https://checkout.stripe.com/v2/checkout.js"></script>
+[[if or (eq "prod" .Env) (eq "uat" .Env)]]
+  <link rel="stylesheet" href="/public/css/styles.min.css">
+  <script src="/public/js/script.min.js"></script>
+[[else]]
+  <link rel="stylesheet" href="/public/css/styles.css" />
+  <script async src="/public/js/script.js"></script>
+[[end]]
+<script>
+[[if eq "prod" .Env]]
+var seasoned = {stripePubKey: "pk_live_uubhFiev8HLGSeQoMdEjHjrr"};
+[[else]]
+var seasoned = {stripePubKey: "pk_test_YQAB4B3XRQarsCHs6mkbkavj"};
+[[end]]
+</script>

@@ -1,0 +1,21 @@
+---
+- hosts: '{{ lookup("env", "GI_HOST") }}'
+  user: '{{ lookup("env", "GI_USER") }}'
+  vars:
+    web_dir: '{{ lookup("env", "WEB_DIR") }}'
+    app_name: 'redlion'
+    app_version: 'dev'
+    app_env: 'dev'
+    app_port: '{{ lookup ("env", "APP_PORT")}}'
+    server_protocol: 'http'
+    server_address: 'dev.theredlionafterhours.co.uk'
+    server_ip: '127.0.0.1'
+    use_ssl: false
+    stripe_api_key: '{{ lookup("env", "TEST_STRIPE_API_KEY") }}'
+    session_secret: '{{ lookup("env", "UAT_SESSION_SECRET") }}'
+    nginx_base: '/usr/local'
+    src_path: '{{ lookup("env", "SRC_PATH") }}'
+  roles:
+    - ../bower_modules/gi-ansible/roles/helper
+    - ../bower_modules/gi-ansible/roles/webapp
+    - common/roles/update
