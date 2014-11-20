@@ -13,7 +13,7 @@ type Site struct {
 
 func GetSiteID(db dal.Database) (*dal.ObjectID, error) {
 	var aSite Site
-	sites := db.C("Sites")
+	sites := db.C("sites")
 
 	err := sites.Find(dal.BSON{"name": "redlion"}).One(&aSite)
 	if err != nil {

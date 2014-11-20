@@ -34,6 +34,10 @@ func Checkout(w http.ResponseWriter, req *http.Request) {
 
 	decoder := json.NewDecoder(req.Body)
 	var param models.OrderParams
+
+	model := models.NewOrderParams(ctx.SiteID, ctx.DB)
+	err = model.Save(&param)
+
 	err = decoder.Decode(&param)
 	if err != nil {
 		log.Printf("Error getting order params: %s\n", err)
@@ -128,6 +132,9 @@ func Checkout(w http.ResponseWriter, req *http.Request) {
 		ID:     orderNum,
 		Status: "payment completed",
 	}
+
+	param.Result = *result
+	err = model.Save(&param)
 
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
