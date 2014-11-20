@@ -7,11 +7,14 @@
     app_version: '{{ lookup("env", "PROD_VER") }}'
     app_env: 'prod'
     app_port: '{{ lookup ("env", "APP_PORT")}}'
+    db_hosts: "{{hostvars['li-mongo-01']['ansible_eth0']['ipv4']['address']}}:27017,{{hostvars['li-mongo-02']['ansible_eth0']['ipv4']['address']}}:27017"
+    db_name: "redlion"
     server_protocol: 'http'
     server_address: 'www.theredlionafterhours.co.uk'
     server_ip: "{{hostvars['li-prod-01']['ansible_eth0']['ipv4']['address']}}"
     use_ssl: false
     stripe_api_key: '{{ lookup("env", "PROD_STRIPE_API_KEY") }}'
+    mandrill_api_key: '{{ lookup('env', "MANDRILL_API_KEY") }}'
     session_secret: '{{ lookup("env", "PROD_SESSION_SECRET") }}'
   roles:
     - ../bower_modules/gi-ansible/roles/helper

@@ -7,11 +7,14 @@
     app_version: 'dev'
     app_env: 'dev'
     app_port: '{{ lookup ("env", "APP_PORT")}}'
+    db_hosts: "localhost:27017,localhost:27027"
+    db_name: "redlion"
     server_protocol: 'http'
     server_address: 'dev.theredlionafterhours.co.uk'
     server_ip: '127.0.0.1'
     use_ssl: false
     stripe_api_key: '{{ lookup("env", "TEST_STRIPE_API_KEY") }}'
+    mandrill_api_key: '{{ lookup('env', "MANDRILL_API_KEY") }}'
     session_secret: '{{ lookup("env", "UAT_SESSION_SECRET") }}'
     nginx_base: '/usr/local'
     src_path: '{{ lookup("env", "SRC_PATH") }}'

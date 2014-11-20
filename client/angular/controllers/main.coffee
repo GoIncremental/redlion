@@ -1,9 +1,7 @@
 angular.module('redlion').controller 'mainController'
-, ['$scope'
-, ($scope) ->
+, ['$scope', '$q', '$rootScope', '$http'
+, ($scope, $q, $rootScope, $http) ->
 
-  $scope.model =
-    message: "Pre orders available soon"
 
   currentOrder = null
   orderProcess = null
@@ -31,7 +29,7 @@ angular.module('redlion').controller 'mainController'
       description: 'Secure Payment Form'
       billingAddress: true
       shippingAddress: $scope.order.byPost
-      image:  '/public/img/redlion.jpg'
+      image:  '/img/logo.jpg'
       token:       ProcessOrder
     return
 

@@ -1,18 +1,4 @@
 <div class="row">
-  <div ng-cloak class="alert alert-danger" ng-show="orderError">
-    <button type="button" class="close" data-dismiss="alert">&times;</button>
-    <strong>Oops!</strong> Something went wrong and we were unable to process your order.<br/>
-    Your card has <strong>not</strong> been charged.<br/>
-    Please double check all the details and try again, or email contact@theredlionafterhours.co.uk
-  </div>
-  <div ng-cloak class="alert alert-success" ng-show="orderComplete">
-    <button type="button" class="close" data-dismiss="alert">&times;</button>
-    <strong>Order Complete!</strong> Thanks for your order.  You will receive an e-mail confirmation confirming payment.
-  </div>
-  <div ng-cloak class="alert alert-info" ng-show="orderProcessing">
-    <button type="button" class="close" data-dismiss="alert">&times;</button>
-    <strong>Processing...</strong> We are processing your payment.  Please do not refresh the page.
-  </div>
   <div class="col-md-3">
     <img class="img-responsive poster" src="/img/afterhours.jpg">
   </div>
@@ -27,6 +13,20 @@
 
   </div>
   <div class="col-md-12">
+    <div ng-cloak class="alert alert-danger" ng-show="orderError">
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+      <strong>Oops!</strong> Something went wrong and we were unable to process your order.<br/>
+      Your card has <strong>not</strong> been charged.<br/>
+      Please double check all the details and try again, or email orders@theredlionafterhours.co.uk
+    </div>
+    <div ng-cloak class="alert alert-success" ng-show="orderComplete">
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+      <strong>Order Complete!</strong> Thanks for your order.  You will receive an e-mail confirmation confirming payment.
+    </div>
+    <div ng-cloak class="alert alert-info" ng-show="orderProcessing">
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+      <strong>Processing...</strong> We are processing your payment.  Please do not refresh the page.
+    </div>
     <div ng-hide="hideOrderForm">
       <form novalidate class="well form-horizontal col-md-12">
         <legend>Online Order Form</legend>

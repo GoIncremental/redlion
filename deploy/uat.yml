@@ -7,11 +7,14 @@
     app_version: '{{ lookup("env", "UAT_VER") }}'
     app_env: 'uat'
     app_port: '{{ lookup ("env", "APP_PORT")}}'
+    db_hosts: "{{hostvars['li-mongo-01']['ansible_eth0']['ipv4']['address']}}:27027,{{hostvars['li-mongo-02']['ansible_eth0']['ipv4']['address']}}:27027"
+    db_name: "redlion"
     server_protocol: 'http'
     server_address: 'uat.theredlionafterhours.co.uk'
     server_ip: "{{hostvars['li-uat-01']['ansible_eth0']['ipv4']['address']}}"
     use_ssl: false
-    stripe_api_key: '{{ lookup("env", "UAT_STRIPE_API_KEY") }}'
+    stripe_api_key: '{{ lookup("env", "TEST_STRIPE_API_KEY") }}'
+    mandrill_api_key: '{{ lookup('env', "MANDRILL_API_KEY") }}'
     session_secret: '{{ lookup("env", "UAT_SESSION_SECRET") }}'
   roles:
     - ../bower_modules/gi-ansible/roles/helper
