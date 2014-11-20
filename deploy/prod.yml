@@ -1,4 +1,5 @@
 ---
+- include: touchdbs.yml
 - hosts: li-prod-01
   user: deploy
   vars:
@@ -14,7 +15,7 @@
     server_ip: "{{hostvars['li-prod-01']['ansible_eth0']['ipv4']['address']}}"
     use_ssl: false
     stripe_api_key: '{{ lookup("env", "PROD_STRIPE_API_KEY") }}'
-    mandrill_api_key: '{{ lookup('env', "MANDRILL_API_KEY") }}'
+    mandrill_api_key: '{{ lookup("env", "MANDRILL_API_KEY") }}'
     session_secret: '{{ lookup("env", "PROD_SESSION_SECRET") }}'
   roles:
     - ../bower_modules/gi-ansible/roles/helper

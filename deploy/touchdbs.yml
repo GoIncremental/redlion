@@ -1,0 +1,5 @@
+- hosts: mongo
+  user: deploy
+  tasks:
+  - name: gather facts
+    command: echo "gathering facts"
