@@ -7,6 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="keywords" content="Calendar, St. Giles, Red Lion, Barton under Needwood" />
     <meta name="description" content="This is a site where you can purchase copies of the red lion after hours calender" />
+    [[template "analytics" .Site]]
   </head>
   <body>
     [[if ne "prod" .Site.Env]]
@@ -19,6 +20,6 @@
     </div>
 
     [[template "script" .Site]]
-    [[template "analytics" .Site]]
+
   </body>
 </html>
