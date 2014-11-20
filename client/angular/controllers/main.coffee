@@ -42,12 +42,16 @@ angular.module('redlion').controller 'mainController'
 
   $scope.$on 'order-processing', (event, promise) ->
     $scope.orderProcessing = true
+    $scope.hideOrderForm = true
     promise.then (result) ->
       $scope.orderProcessing = false
       if result.status is 'payment completed'
         $scope.orderComplete = true
         $scope.orderError = false
+        $scope.hideOrderForm = true
+        $scope.orderRef = result.id
       else
+        $scope.hideOrderForm = false
         $scope.orderError = true
         $scope.orderComplete = false
 
