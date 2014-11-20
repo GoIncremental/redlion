@@ -85,15 +85,15 @@ func Checkout(w http.ResponseWriter, req *http.Request) {
 			Type:  "bcc",
 		},
 	}
-
+	amt := float64(param.GrandTotal()) / 100
 	vars := []gochimp.Var{
 		gochimp.Var{
 			Name:    "grand_total",
-			Content: string(param.GrandTotal()),
+			Content: fmt.Sprintf("£%.2f", amt),
 		},
 		gochimp.Var{
 			Name:    "quantity",
-			Content: string(param.Quantity),
+			Content: fmt.Sprintf("%d", param.Quantity),
 		},
 		gochimp.Var{
 			Name:    "invoice_num",
