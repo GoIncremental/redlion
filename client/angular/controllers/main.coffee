@@ -23,7 +23,7 @@ angular.module('redlion').controller 'mainController'
     currentOrder = order
     StripeCheckout.open
       key:         redlion.stripePubKey
-      amount:      $scope.grandTotal() * 100
+      amount:      $scope.grandTotal()
       currency:    'gbp'
       name:        'Red Lion After Hours'
       description: 'Secure Payment Form'
@@ -62,14 +62,14 @@ angular.module('redlion').controller 'mainController'
 
   $scope.postageCharge = () ->
     if $scope.order.post
-      3
+      300
     else
       0
 
   $scope.processingFee = () ->
-    $scope.order.quantity * 0.25 + 0.2
+    $scope.order.quantity * 25 + 20
 
   $scope.grandTotal = () ->
-    $scope.order.quantity * 10 + $scope.postageCharge() + $scope.processingFee()
+    $scope.order.quantity * 1000 + $scope.postageCharge() + $scope.processingFee()
 
 ]

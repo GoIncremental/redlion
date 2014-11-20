@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <link rel="shortcut icon" href="favicon.ico" />
     <title>The Red Lion | After Hours</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -8,11 +9,16 @@
     <meta name="description" content="This is a site where you can purchase copies of the red lion after hours calender" />
   </head>
   <body>
+    [[if ne "prod" .Site.Env]]
+      <pre>This is the [[.Site.Env]] Environment. Google will not index this page</pre>
+    [[end]]
+
+
     <div class="container" ng-controller="mainController" ng-cloak>
       [[yield]]
     </div>
 
     [[template "script" .Site]]
-
+    [[template "analytics" .Site]]
   </body>
 </html>
