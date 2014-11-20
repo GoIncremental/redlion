@@ -12,7 +12,7 @@ type StripeParam struct {
 
 type OrderParams struct {
 	Quantity uint64      `json:"quantity"`
-	Post     bool        `json:"byPost"`
+	Post     bool        `json:"post"`
 	Token    string      `json:"token"`
 	Email    string      `json:"email"`
 	Customer StripeParam `json:"args"`

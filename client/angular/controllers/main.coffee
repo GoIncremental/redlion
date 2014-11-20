@@ -28,7 +28,7 @@ angular.module('redlion').controller 'mainController'
       name:        'Red Lion After Hours'
       description: 'Secure Payment Form'
       billingAddress: true
-      shippingAddress: $scope.order.byPost
+      shippingAddress: $scope.order.post
       image:  '/img/logo.jpg'
       token:       ProcessOrder
     return
@@ -38,7 +38,7 @@ angular.module('redlion').controller 'mainController'
 
   $scope.order =
     quantity: 1
-    byPost: false
+    post: false
 
   $scope.$on 'order-processing', (event, promise) ->
     $scope.orderProcessing = true
@@ -61,7 +61,7 @@ angular.module('redlion').controller 'mainController'
     GetPaymentDetails($scope.order)
 
   $scope.postageCharge = () ->
-    if $scope.order.byPost
+    if $scope.order.post
       3
     else
       0
