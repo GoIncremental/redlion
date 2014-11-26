@@ -62,12 +62,12 @@ angular.module('redlion').controller 'mainController'
 
   $scope.postageCharge = () ->
     if $scope.order.post
-      300
+      500
     else
       0
 
   $scope.processingFee = () ->
-    $scope.order.quantity * 25 + 20
+    $scope.order.quantity * 25 + 25
 
   $scope.grandTotal = () ->
     $scope.order.quantity * 1000 + $scope.postageCharge() + $scope.processingFee()

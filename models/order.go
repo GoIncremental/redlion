@@ -31,9 +31,9 @@ type OrderParams struct {
 }
 
 func (o *OrderParams) GrandTotal() uint64 {
-	result := o.Quantity*1000 + o.Quantity*25 + 20
+	result := o.Quantity*1000 + o.Quantity*25 + 25
 	if o.Post {
-		result += 300
+		result += 500
 	}
 	return result
 }
